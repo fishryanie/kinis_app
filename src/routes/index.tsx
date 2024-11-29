@@ -5,15 +5,17 @@ import {useNotificationPermission} from 'hooks/permissions';
 import {useFCMToken} from 'hooks/common';
 import {useAppDispatch} from 'hooks/redux';
 import {onReadyNavigate} from 'stores/app/reducer';
-import {RootStackParamList} from 'interface/routes';
-import PoseDetection from 'screens/PoseDetection';
+import {RootStackParamList} from 'routes/router';
+// import Bottom from './Bottom';
+import AccountInfoScreen from 'screens/common/AccountInfoScreen';
+import Bottom from './Bottom';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 export const navigationRef = createNavigationContainerRef<RootStackParamList>();
 
 export default function Routes() {
-  useFCMToken();
-  useNotificationPermission();
+  // useFCMToken();
+  // useNotificationPermission();
 
   const dispatch = useAppDispatch();
 
@@ -21,8 +23,9 @@ export default function Routes() {
 
   return (
     <NavigationContainer ref={navigationRef} onReady={handleReadyNavigation}>
-      <Stack.Navigator screenOptions={{headerShown: false}}>
-        <Stack.Screen name="PoseDetectionScreen" component={PoseDetection} />
+      <Stack.Navigator initialRouteName="Bottom" screenOptions={{headerShown: false}}>
+        <Stack.Screen name="Bottom" component={Bottom} />
+        <Stack.Screen name="AccountInfoScreen" component={AccountInfoScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

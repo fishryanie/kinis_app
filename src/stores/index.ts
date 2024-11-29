@@ -1,8 +1,9 @@
 import {FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistStore} from 'redux-persist';
 import {combineReducers, configureStore} from '@reduxjs/toolkit';
 import reactotron from 'configs/reactotron';
+import app from './app/reducer';
 
-const rootReducer = combineReducers({});
+const rootReducer = combineReducers({app});
 
 export const store = configureStore({
   reducer: rootReducer,

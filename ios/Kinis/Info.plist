@@ -1,52 +1,139 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
-	<key>CFBundleDevelopmentRegion</key>
-	<string>en</string>
-	<key>CFBundleDisplayName</key>
-	<string>Kinis</string>
-	<key>CFBundleExecutable</key>
-	<string>$(EXECUTABLE_NAME)</string>
-	<key>CFBundleIdentifier</key>
-	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-	<key>CFBundleInfoDictionaryVersion</key>
-	<string>6.0</string>
-	<key>CFBundleName</key>
-	<string>$(PRODUCT_NAME)</string>
-	<key>CFBundlePackageType</key>
-	<string>APPL</string>
-	<key>CFBundleShortVersionString</key>
-	<string>$(MARKETING_VERSION)</string>
-	<key>CFBundleSignature</key>
-	<string>????</string>
-	<key>CFBundleVersion</key>
-	<string>$(CURRENT_PROJECT_VERSION)</string>
-	<key>LSRequiresIPhoneOS</key>
-	<true/>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-	  <!-- Do not change NSAllowsArbitraryLoads to true, or you will risk app rejection! -->
-		<key>NSAllowsArbitraryLoads</key>
-		<false/>
-		<key>NSAllowsLocalNetworking</key>
-		<true/>
-	</dict>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
-	<key>UIRequiredDeviceCapabilities</key>
-	<array>
-		<string>arm64</string>
-	</array>
-	<key>UISupportedInterfaceOrientations</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
-</dict>
+    <dict>
+        <!-- App Metadata -->
+        <!-- The development region for the app, used for localization -->
+        <key>CFBundleDevelopmentRegion</key>
+        <string>en</string>
+        
+        <!-- The display name of the app shown on the device's home screen -->
+        <key>CFBundleDisplayName</key>
+        <string>Kinis</string>
+        
+        <!-- The name of the app's executable file -->
+        <key>CFBundleExecutable</key>
+        <string>$(EXECUTABLE_NAME)</string>
+        
+        <!-- The unique identifier for your app (typically the reverse domain name) -->
+        <key>CFBundleIdentifier</key>
+        <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+        
+        <!-- Version of the Info.plist file format (usually 6.0) -->
+        <key>CFBundleInfoDictionaryVersion</key>
+        <string>6.0</string>
+        
+        <!-- The name of the app bundle -->
+        <key>CFBundleName</key>
+        <string>$(PRODUCT_NAME)</string>
+        
+        <!-- The type of the app package (usually "APPL") -->
+        <key>CFBundlePackageType</key>
+        <string>APPL</string>
+        
+        <!-- The short version string of the app (used for marketing purposes) -->
+        <key>CFBundleShortVersionString</key>
+        <string>$(MARKETING_VERSION)</string>
+        
+        <!-- A signature string used for the app bundle (typically unused) -->
+        <key>CFBundleSignature</key>
+        <string>????</string>
+        
+        <!-- The app's version number, incremented with each release -->
+        <key>CFBundleVersion</key>
+        <string>$(CURRENT_PROJECT_VERSION)</string>
+        
+        <!-- App Requirements -->
+        <!-- Specifies that the app requires iPhone OS to run -->
+        <key>LSRequiresIPhoneOS</key>
+        <true/>
+        
+        <!-- Specifies required device capabilities, such as arm64 architecture -->
+        <key>UIRequiredDeviceCapabilities</key>
+        <array>
+            <!-- Requires an arm64 architecture device (64-bit) -->
+            <string>arm64</string>
+        </array>
+
+        <!-- App Permissions -->
+        <!-- Configuration for app transport security settings -->
+        <key>NSAppTransportSecurity</key>
+        <dict>
+            <!-- Security setting that controls whether arbitrary network loads are allowed -->
+            <!-- Do not change NSAllowsArbitraryLoads to true, or you will risk app rejection! -->
+            <key>NSAllowsArbitraryLoads</key>
+            <false/>
+            <!-- Allows local networking on the device -->
+            <key>NSAllowsLocalNetworking</key>
+            <true/>
+        </dict>
+        
+        <!-- Permission request message for location access when the app is in use -->
+        <key>NSLocationWhenInUseUsageDescription</key>
+        <string></string>
+        
+        <!-- Permission request message for camera access -->
+        <key>NSCameraUsageDescription</key>
+        <string>$(PRODUCT_NAME) need access to your camera to detect poses.</string>
+        
+        <!-- Key for always usage description of Bluetooth -->
+        <key>NSBluetoothAlwaysUsageDescription</key>
+        <string>$(PRODUCT_NAME) need access Bluetooth to connect to peripheral devices.</string>
+        
+        <!-- Key for peripheral usage description of Bluetooth -->
+        <key>NSBluetoothPeripheralUsageDescription</key>
+        <string>$(PRODUCT_NAME) need access Bluetooth to connect to peripheral devices.</string>
+
+        <!-- App Interface -->
+        <!-- Specifies the name of the launch storyboard used when starting the app -->
+        <key>UILaunchStoryboardName</key>
+        <string>LaunchScreen</string>
+        
+        <!-- Supported screen orientations for iPhone -->
+        <key>UISupportedInterfaceOrientations</key>
+        <array>
+            <!-- App supports only portrait mode on iPhone -->
+            <string>UIInterfaceOrientationPortrait</string>
+            <!-- App supports landscape left mode on iPhone -->
+            <string>UIInterfaceOrientationLandscapeLeft</string>
+            <!-- App supports landscape right mode on iPhone -->
+            <string>UIInterfaceOrientationLandscapeRight</string>
+        </array>
+        
+        <!-- Supported screen orientations for iPad -->
+        <key>UISupportedInterfaceOrientations~ipad</key>
+        <array>
+            <!-- The app supports only portrait mode on iPad -->
+            <string>UIInterfaceOrientationPortrait</string>
+        </array>
+        
+        <!-- Setting to control the status bar appearance -->
+        <key>UIViewControllerBasedStatusBarAppearance</key>
+        <false/>
+
+        <!-- Custom Fonts -->
+        <!-- List of custom fonts included in the app -->
+        <key>UIAppFonts</key>
+        <array>
+            <string>AntDesign.ttf</string>
+            <string>Entypo.ttf</string>
+            <string>EvilIcons.ttf</string>
+            <string>Feather.ttf</string>
+            <string>FontAwesome.ttf</string>
+            <string>FontAwesome5_Brands.ttf</string>
+            <string>FontAwesome5_Regular.ttf</string>
+            <string>FontAwesome5_Solid.ttf</string>
+            <string>FontAwesome6_Brands.ttf</string>
+            <string>FontAwesome6_Regular.ttf</string>
+            <string>FontAwesome6_Solid.ttf</string>
+            <string>Fontisto.ttf</string>
+            <string>Foundation.ttf</string>
+            <string>Ionicons.ttf</string>
+            <string>MaterialCommunityIcons.ttf</string>
+            <string>MaterialIcons.ttf</string>
+            <string>Octicons.ttf</string>
+            <string>SimpleLineIcons.ttf</string>
+            <string>Zocial.ttf</string>
+        </array>
+    </dict>
 </plist>

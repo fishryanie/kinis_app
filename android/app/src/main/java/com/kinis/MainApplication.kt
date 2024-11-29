@@ -10,9 +10,15 @@ import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.load
 import com.facebook.react.defaults.DefaultReactHost.getDefaultReactHost
 import com.facebook.react.defaults.DefaultReactNativeHost
 import com.facebook.soloader.SoLoader
+import com.mrousavy.camera.frameprocessors.FrameProcessorPluginRegistry
 
 class MainApplication : Application(), ReactApplication {
-
+  companion object {
+    init {
+      FrameProcessorPluginRegistry.addFrameProcessorPlugin("detectPose") { proxy, args -> LandmarksPose(proxy, args) }
+      FrameProcessorPluginRegistry.addFrameProcessorPlugin("detectHand") { proxy, args -> LandmarksHand(proxy, args) }
+    }
+  }
   override val reactNativeHost: ReactNativeHost =
       object : DefaultReactNativeHost(this) {
         override fun getPackages(): List<ReactPackage> =

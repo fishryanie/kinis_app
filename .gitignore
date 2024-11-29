@@ -1,7 +1,6 @@
 # OSX
 #
 .DS_Store
-
 # Xcode
 #
 build/
@@ -39,7 +38,9 @@ local.properties
 node_modules/
 npm-debug.log
 yarn-error.log
-
+yarn.lock
+bun.lockb
+package-lock.json
 # fastlane
 #
 # It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the

@@ -1,12 +1,12 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import codePush, {CodePushOptions} from 'react-native-code-push';
+import Routes from 'routes';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {PersistGate} from 'redux-persist/integration/react';
-import {SafeAreaView} from 'react-native';
 import {persistor, store} from 'stores';
 import {Provider} from 'react-redux';
-import Routes from 'routes';
 
 const queryClient = new QueryClient();
 
@@ -17,18 +17,18 @@ const queryClient = new QueryClient();
 const App: React.FC = () => {
   return (
     <Provider store={store}>
-      <QueryClientProvider client={queryClient}>
-        <SafeAreaProvider>
-          <PersistGate persistor={persistor} loading={null}>
-            <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
+      <PersistGate persistor={persistor} loading={null}>
+        <QueryClientProvider client={queryClient}>
+          <GestureHandlerRootView style={{flex: 1}}>
+            <SafeAreaProvider>
               <Routes />
-            </SafeAreaView>
-          </PersistGate>
-        </SafeAreaProvider>
-      </QueryClientProvider>
+            </SafeAreaProvider>
+          </GestureHandlerRootView>
+        </QueryClientProvider>
+      </PersistGate>
     </Provider>
   );
 };
 
 // export default codePush(codePushOptions)(App);
-export default App
+export default App;

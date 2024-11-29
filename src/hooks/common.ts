@@ -1,4 +1,4 @@
-import messaging from '@react-native-firebase/messaging';
+// import messaging from '@react-native-firebase/messaging';
 import {DependencyList, EffectCallback, useEffect, useRef,} from 'react';
 import {isEqual} from 'lodash';
 import {Alert} from 'react-native';
@@ -20,20 +20,20 @@ export const useDeepCompareEffect = (callback: EffectCallback, dependencies: Dep
 
 export const useFCMToken = () => {
   const dispatch = useAppDispatch();
-  useEffect(() => {
-    messaging()
-      .getToken()
-      .then(token => {
-        dispatch(onSaveDeviceToken());
-        if (__DEV__) {
-          console.log('DEVICE_TOKEN', token);
-        }
-      });
-    const unsubscribe = messaging().onMessage(async remoteMessage => {
-      Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
-    });
-    return () => {
-      unsubscribe();
-    };
-  }, [dispatch]);
+  // useEffect(() => {
+  //   messaging()
+  //     .getToken()
+  //     .then(token => {
+  //       dispatch(onSaveDeviceToken());
+  //       if (__DEV__) {
+  //         console.log('DEVICE_TOKEN', token);
+  //       }
+  //     });
+  //   const unsubscribe = messaging().onMessage(async remoteMessage => {
+  //     Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+  //   });
+  //   return () => {
+  //     unsubscribe();
+  //   };
+  // }, [dispatch]);
 };

@@ -1,14 +1,44 @@
-# Resolve react_native_pods.rb with node to allow for hoisting
-require Pod::Executable.execute_command('node', ['-p',
-  'require.resolve(
-    "react-native/scripts/react_native_pods.rb",
-    {paths: [process.argv[1]]},
-  )', __dir__]).strip
+# $RNFirebaseAsStaticFramework = true
+def node_require(script)
+  # Resolve script with node to allow for hoisting
+  require Pod::Executable.execute_command('node', ['-p',
+    "require.resolve(
+      '#{script}',
+      {paths: [process.argv[1]]},
+    )", __dir__]).strip
+end
 
-platform :ios, min_ios_version_supported
+node_require('react-native/scripts/react_native_pods.rb')
+node_require('react-native-permissions/scripts/setup.rb')
+
+
+platform :ios, 13.5
 prepare_react_native_project!
 
-linkage = ENV['USE_FRAMEWORKS']
+setup_permissions([
+  # 'AppTrackingTransparency',
+  'BluetoothPeripheral',
+  # 'Calendars',
+  'Camera',
+  # 'Contacts',
+  'FaceID',
+  'LocationAccuracy',
+  'LocationAlways',
+  'LocationWhenInUse',
+  # 'MediaLibrary',
+  # 'Microphone',
+  # 'Motion',
+  'Notifications',
+  # 'PhotoLibrary',
+  # 'PhotoLibraryAddOnly',
+  # 'Reminders',
+  # 'Siri',
+  # 'SpeechRecognition',
+  # 'StoreKit',
+])
+
+# linkage = ENV['USE_FRAMEWORKS']
+linkage = 'static'
 if linkage != nil
   Pod::UI.puts "Configuring Pod with #{linkage}ally linked Frameworks".green
   use_frameworks! :linkage => linkage.to_sym
@@ -16,9 +46,12 @@ end
 
 target 'Kinis' do
   config = use_native_modules!
+  
+  pod 'MediaPipeTasksVision', '0.10.14'
 
   use_react_native!(
     :path => config[:reactNativePath],
+    # :hermes_enabled => false,
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
@@ -36,5 +69,46 @@ target 'Kinis' do
       :mac_catalyst_enabled => false,
       # :ccache_enabled => true
     )
+  
+    #eact-native-vision-camera
+    # Ghi đè phiên bản tối thiểu iOS cho react-native-vision-camera
+    installer.pods_project.targets.each do |target|
+      if target.name == 'react-native-vision-camera'
+        target.build_configurations.each do |config|
+          config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
+        end
+      end
+    end
+
+    # #react-native-fast-image
+    # # Define the file path 
+    # file_path = 'Pods/SDWebImage/WebImage/'
+    # # Read the file content
+    # text = File.read(file_path)
+    # # Define the changes
+    # from_text = <<-EOL
+    # UIGraphicsBeginImageContextWithOptions(image.size, NO, newImage.scale);
+    # [color set];
+    # [newImage drawInRect: CGRectMake(0, 0, image.size.width, newImage.size.height)];
+    # newImage = UIGraphicsGetImageFromCurrentImageContext();
+    # UIGraphicsEndImageContext();
+    # return newImage;
+    # EOL
+    # to_text = <<-EOL
+    # UIGraphicsImageRendererFormat *format = [UIGraphicsImageRendererFormat defaultFormat];
+    # UIGraphicsImageRenderer *renderer = [[UIGraphicsImageRenderer alloc] initWithSize:image.size format:format];
+    # UIImage *resultImage = [renderer imageWithActions:^(UIGraphicsImageRendererContext * _Nonnull rendererContext) {
+    #   CGRect rect = CGRectMake(0, 0, image.size.width, image.size.height);
+    #   [color set];
+    #   [newImage drawInRect:rect];
+    # }];
+    # return resultImage;
+    # EOL
+    # # Replace the content
+    # new_contents = text.gsub(from_text, to_text)
+    # # Write back the content to the file
+    # File.open(file_path, "w") { |file| file.puts new_contents }
+
+
   end
 end
