@@ -12,7 +12,7 @@ node_require('react-native/scripts/react_native_pods.rb')
 node_require('react-native-permissions/scripts/setup.rb')
 
 
-platform :ios, 13.5
+platform :ios, 15.1
 prepare_react_native_project!
 
 setup_permissions([
@@ -75,7 +75,7 @@ target 'Kinis' do
     installer.pods_project.targets.each do |target|
       if target.name == 'react-native-vision-camera'
         target.build_configurations.each do |config|
-          config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
+          config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.1'
         end
       end
     end

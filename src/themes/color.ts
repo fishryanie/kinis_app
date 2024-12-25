@@ -3,6 +3,7 @@ export const COLORS = {
   black: '#000000',
 
   primary: '#F3742D',
+  primary100: '#FDE8DC',
   secondary: '#FAB897',
 
   textPrimary: '#434343',
