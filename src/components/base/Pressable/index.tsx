@@ -22,7 +22,7 @@ export type PressableProps = TouchableOpacityProps &
     alignItems: ViewStyle['alignItems'];
     justifyContent: ViewStyle['justifyContent'];
     alignSelf: ViewStyle['alignSelf'];
-    gap: ViewStyle['gap'];
+    gap: number;
     zIndex: number;
     padding: Size;
     paddingHorizontal: Size;
@@ -148,7 +148,7 @@ export const Pressable = forwardRef(
       onPress,
       ...props
     }: PressableProps,
-    ref: Ref<TouchableOpacity>,
+    ref: Ref<any>,
   ) => {
     const safeInsets = useSafeAreaInsets();
     const pendingRef = useRef(false);

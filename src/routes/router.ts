@@ -28,4 +28,5 @@ export type BottomParamList = {
 export type CommonParamList = {
   SettingScreen: undefined;
   AccountInfoScreen: undefined;
+  OnboardingScreen: undefined
 };

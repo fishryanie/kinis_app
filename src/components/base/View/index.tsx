@@ -59,7 +59,7 @@ export type ViewProps = RNViewProps &
     bottom: Size;
     left: Size;
     absoluteFillObject: boolean;
-    gap: ViewStyle['gap'];
+    gap: number;
     width: Size;
     height: Size;
     maxWidth: Size;

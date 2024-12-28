@@ -1,7 +1,7 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {initialWindowMetrics} from 'react-native-safe-area-context';
-import {BottomParamList, BottomTabScreenProps} from 'routes/router';
+import {BottomParamList} from 'routes/router';
 import {DetectScreen, HomeScreen, MessagesScreen} from 'screens/bottom';
 import {Image, View} from 'components/base';
 import {StyleSheet} from 'react-native';
@@ -17,7 +17,7 @@ type RenderIcon = {
 type BottomListRenderItem = {
   label: string;
   name: keyof BottomParamList;
-  screen: BottomTabScreenProps<keyof BottomParamList>;
+  screen: any;
   icon: string;
 };
 

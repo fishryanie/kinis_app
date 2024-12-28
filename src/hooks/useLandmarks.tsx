@@ -1,7 +1,6 @@
-import {DrawableFrame, Frame, useSkiaFrameProcessor, VisionCameraProxy} from 'react-native-vision-camera';
-import {linesBodyPart, linesHandPart} from 'constants/linesPointPair';
+import {Frame, useSkiaFrameProcessor, VisionCameraProxy} from 'react-native-vision-camera';
+import {linesBodyPart} from 'constants/linesPointPair';
 import {PaintStyle, Skia} from '@shopify/react-native-skia';
-import {useResizePlugin} from 'vision-camera-resize-plugin';
 import {COLORS} from 'themes/color';
 
 const paint = Skia.Paint();
@@ -15,7 +14,7 @@ linePaint.setStyle(PaintStyle.Fill);
 linePaint.setColor(Skia.Color(COLORS.primary));
 
 const landmarksPosePlugin = VisionCameraProxy.initFrameProcessorPlugin('landmarksPose', {});
-const landmarksHandPlugin = VisionCameraProxy.initFrameProcessorPlugin('landmarksHand', {});
+// const landmarksHandPlugin = VisionCameraProxy.initFrameProcessorPlugin('landmarksHand', {});
 
 function bodyLandmarks(frame: Frame) {
   'worklet';
@@ -25,33 +24,33 @@ function bodyLandmarks(frame: Frame) {
   return landmarksPosePlugin.call(frame);
 }
 
-function handLandmarks(frame: Frame) {
-  'worklet';
-  if (landmarksHandPlugin === undefined) {
-    throw new Error('Failed to load Frame Processor Plugin!');
-  }
-  return landmarksHandPlugin.call(frame);
-}
+// function handLandmarks(frame: Frame) {
+//   'worklet';
+//   if (landmarksHandPlugin === undefined) {
+//     throw new Error('Failed to load Frame Processor Plugin!');
+//   }
+//   return landmarksHandPlugin.call(frame);
+// }
 
-function drawParts(detectedPartsArray: any[], linesPart: number[][], frame: DrawableFrame) {
-  'worklet';
-  const frameWidth = Number(frame.width);
-  const frameHeight = Number(frame.height);
-  detectedPartsArray.forEach(part => {
-    if (Array.isArray(part) && part.length > 0) {
-      linesPart.forEach(([fromIndex, toIndex]) => {
-        const from = part[fromIndex];
-        const to = part[toIndex];
-        frame.drawLine(from.x * frameWidth, from.y * frameHeight, to.x * frameWidth, to.y * frameHeight, linePaint);
-      });
-      part.forEach(landmark => {
-        if (landmark && landmark.x !== undefined && landmark.y !== undefined) {
-          frame.drawCircle(landmark.x * frameWidth, landmark.y * frameHeight, 6, paint);
-        }
-      });
-    }
-  });
-}
+// function drawParts(detectedPartsArray: any[], linesPart: number[][], frame: DrawableFrame) {
+//   'worklet';
+//   const frameWidth = Number(frame.width);
+//   const frameHeight = Number(frame.height);
+//   detectedPartsArray.forEach(part => {
+//     if (Array.isArray(part) && part.length > 0) {
+//       linesPart.forEach(([fromIndex, toIndex]) => {
+//         const from = part[fromIndex];
+//         const to = part[toIndex];
+//         frame.drawLine(from.x * frameWidth, from.y * frameHeight, to.x * frameWidth, to.y * frameHeight, linePaint);
+//       });
+//       part.forEach(landmark => {
+//         if (landmark && landmark.x !== undefined && landmark.y !== undefined) {
+//           frame.drawCircle(landmark.x * frameWidth, landmark.y * frameHeight, 6, paint);
+//         }
+//       });
+//     }
+//   });
+// }
 
 interface LandmarksProps {
   isHand?: boolean;
@@ -59,7 +58,7 @@ interface LandmarksProps {
 }
 const pointsToDraw = Array.from(new Set(linesBodyPart.flat()));
 
-export default function useLandmarks({isHand, isPose}: LandmarksProps) {
+export default function useLandmarks({isPose}: LandmarksProps) {
   const frameProcessor = useSkiaFrameProcessor(frame => {
     'worklet';
     // const resized = resize(frame, {
@@ -71,6 +70,7 @@ export default function useLandmarks({isHand, isPose}: LandmarksProps) {
     //   dataType: 'uint8'
     // })
     const detectedBodyData = isPose && bodyLandmarks(frame);
+    console.log('🚀 ~ frameProcessor ~ detectedBodyData:', detectedBodyData);
     // const detectedHandData = isHand && handLandmarks(frame);
 
     frame.render();
@@ -84,7 +84,7 @@ export default function useLandmarks({isHand, isPose}: LandmarksProps) {
     const frameWidth = frame.width;
     const frameHeight = frame.height;
 
-    for (const hand of detectedBodyData || []) {
+    for (const hand of detectedBodyData || ([] as any)) {
       // Draw lines
       for (const [from, to] of linesBodyPart) {
         frame.drawLine(
@@ -97,12 +97,7 @@ export default function useLandmarks({isHand, isPose}: LandmarksProps) {
       }
       for (const index of pointsToDraw) {
         const mark = hand[index];
-        frame.drawCircle(
-          mark.x * Number(frameWidth),
-          mark.y * Number(frameHeight),
-          6,
-          paint,
-        );
+        frame.drawCircle(mark.x * Number(frameWidth), mark.y * Number(frameHeight), 6, paint);
       }
     }
   }, []);
