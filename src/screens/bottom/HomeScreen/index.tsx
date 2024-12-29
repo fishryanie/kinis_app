@@ -4,11 +4,11 @@ import {BottomTabScreenProps} from 'routes/router';
 import {BleManager, Device, DeviceId, Subscription} from 'react-native-ble-plx';
 import {FlatList, StyleSheet} from 'react-native';
 
-export type HomeScreenProps = BottomTabScreenProps<'BottomHomeScreen'>;
+interface HomeScreenProps extends BottomTabScreenProps<'BottomHomeScreen'> {}
 
 const bleManager = new BleManager();
 
-export const HomeScreen: React.FC<HomeScreenProps> = props => {
+export const HomeScreen: React.FC<HomeScreenProps> = () => {
   const [devices, setDevices] = useState<Device[]>([]);
   const [connectedDevice, setConnectedDevice] = useState<Device | null>(null);
   const [subscription, setSubscription] = useState<Subscription | null>(null);
@@ -90,11 +90,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = props => {
       {connectedDevice && (
         <View style={styles.connectedDevice}>
           <Text>Connected to {connectedDevice.name || 'Unnamed Device'}</Text>
-          <FlatList
-            data={messages}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={({item}) => <Text>{item}</Text>}
-          />
+          <FlatList data={messages} keyExtractor={(item, index) => index.toString()} renderItem={({item}) => <Text>{item}</Text>} />
         </View>
       )}
     </View>
